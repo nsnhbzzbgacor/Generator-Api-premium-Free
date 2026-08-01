@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Apex Vercel</title></head>
+<body style="background:#000;color:#0f0;font-family:monospace;padding:20px;">
+<h1>> APEX DEPLOY VERCEL</h1>
+<p>Generate API Key OpenAI (1 platform) - < 30 detik</p>
+<input type="text" id="email" placeholder="email@domain.com" style="width:300px;padding:10px;">
+<button onclick="gen()" style="padding:10px;background:#0f0;color:#000;">>> GENERATE</button>
+<pre id="out" style="border:1px solid #0f0;padding:20px;min-height:100px;">Menunggu...</pre>
+<script>
+async function gen(){
+ const email = document.getElementById('email').value;
+ if(!email) return alert('Masukkan email');
+ document.getElementById('out').innerText = 'PROSES...';
+ try{
+   const r = await fetch('/api/generate', {
+     method:'POST',
+     headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({email})
+   });
+   const data = await r.json();
+   document.getElementById('out').innerHTML = JSON.stringify(data, null, 2);
+ }catch(e){
+   document.getElementById('out').innerText = 'ERROR: '+e.message;
+ }
+}
+</script>
+</body>
+</html>
